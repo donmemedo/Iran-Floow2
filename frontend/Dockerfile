@@ -1,4 +1,4 @@
-FROM node:24-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
@@ -7,7 +7,7 @@ ARG API_URL=http://backend:8000
 ENV API_URL=$API_URL NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
-FROM node:24-alpine
+FROM node:26-alpine
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
 COPY --from=build /app/.next/standalone ./
